@@ -1,0 +1,19 @@
+{
+  "display_name": "NPC Bank",
+  "loading_order": 100,
+  "requires": [],
+  "optional": [],
+  "dependencies": [],
+  "js": "index.js",
+  "css": "style.css",
+  "author": "Douglas (Megarazy) — extracted from Megumin-Suite-Beta",
+  "version": "1.0.0",
+  "generate_interceptor": "npcBankInterceptor",
+  "homePage": "https://github.com/Arif-salah/Megumin-Suite-Beta",
+  "description": "Standalone NPC Bank system for SillyTavern — works with any preset. Extracts, stores, and injects NPC dossiers automatically.",
+  "hooks": {
+    "activate": "onActivate",
+    "disable": "onDisable"
+  },
+  "minimum_client_version": "1.12.0"
+}

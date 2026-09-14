@@ -1,0 +1,593 @@
+/* ────────────────────────────────────────────────────────────────────────────
+   NPC Bank — Styles (Megumin-style)
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* ============================================================================
+   SIDE PANEL
+   ============================================================================ */
+
+.npc-bank-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f43f5e, #e11d48);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 16px rgba(225, 29, 72, 0.4);
+    z-index: 10000;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.npc-bank-fab:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 24px rgba(225, 29, 72, 0.5);
+}
+
+.npc-bank-fab.has-badges::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 10px;
+    height: 10px;
+    background: #10b981;
+    border-radius: 50%;
+    border: 2px solid var(--bg-primary, #1a1a1a);
+}
+
+.npc-bank-fab .npc-bank-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    background: #10b981;
+    color: white;
+    border-radius: 9px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border: 2px solid var(--bg-primary, #1a1a1a);
+}
+
+.npc-bank-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 340px;
+    background: var(--bg-secondary, #1e1e1e);
+    border-left: 1px solid var(--border-color, #333);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.npc-bank-panel.npc-bank-collapsed {
+    transform: translateX(100%);
+}
+
+.npc-bank-panel.npc-bank-floating {
+    transform: none;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    height: auto;
+    max-height: 80vh;
+    border: 1px solid var(--border-color, #333);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.npc-bank-panel.npc-bank-docked-left {
+    right: auto;
+    left: 0;
+    border-left: none;
+    border-right: 1px solid var(--border-color, #333);
+}
+
+.npc-bank-panel.npc-bank-docked-right {
+    right: 0;
+    left: auto;
+}
+
+.npc-bank-resize-handle {
+    position: absolute;
+    top: 0;
+    left: -4px;
+    width: 8px;
+    height: 100%;
+    cursor: ew-resize;
+    background: transparent;
+    z-index: 10;
+}
+
+.npc-bank-panel.npc-bank-docked-left .npc-bank-resize-handle {
+    left: auto;
+    right: -4px;
+}
+
+.npc-bank-header {
+    position: relative;
+    height: 80px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    overflow: hidden;
+}
+
+.npc-bank-header-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.3) saturate(1.5);
+    z-index: 0;
+}
+
+.npc-bank-header-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(20,20,20,0.9), rgba(0,0,0,0.7));
+    z-index: 1;
+}
+
+.npc-bank-title {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-bright, #fff);
+}
+
+.npc-bank-title i {
+    color: #f43f5e;
+}
+
+.npc-bank-header-actions {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 4px;
+}
+
+.npc-bank-icon-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--border-color, #333);
+    color: var(--text-main, #ddd);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.npc-bank-icon-btn:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: var(--accent, #f43f5e);
+    color: var(--accent, #f43f5e);
+}
+
+.npc-bank-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.npc-bank-empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted, #888);
+    text-align: center;
+    padding: 32px 16px;
+}
+
+.npc-bank-empty i {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    opacity: 0.3;
+}
+
+.npc-bank-empty p {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.npc-bank-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.npc-bank-section {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-color, #333);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.npc-bank-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.03);
+    cursor: pointer;
+    user-select: none;
+}
+
+.npc-bank-section-header:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.npc-bank-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.npc-bank-section-toggle {
+    background: none;
+    border: none;
+    color: var(--text-muted, #888);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.npc-bank-section-content {
+    padding: 12px;
+}
+
+/* ============================================================================
+   NEW NPC DOSSIERS SECTION
+   ============================================================================ */
+
+.npc-bank-new-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.npc-bank-new-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-color, #333);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.npc-bank-new-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255,255,255,0.03);
+}
+
+.npc-bank-new-avatar {
+    flex-shrink: 0;
+}
+
+.npc-bank-new-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.npc-bank-new-name {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.npc-bank-new-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted, #888);
+    margin-top: 2px;
+}
+
+.npc-bank-new-fields {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.npc-bank-new-field {
+    display: flex;
+    gap: 8px;
+    font-size: 0.8rem;
+}
+
+.npc-bank-new-field-key {
+    color: var(--text-muted, #888);
+    min-width: 100px;
+    flex-shrink: 0;
+}
+
+.npc-bank-new-field-val {
+    flex: 1;
+    word-break: break-word;
+}
+
+.npc-bank-new-save {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #f43f5e, #e11d48);
+    border: none;
+    border-radius: 0 0 8px 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.npc-bank-new-save:hover {
+    opacity: 0.9;
+}
+
+/* ============================================================================
+   NPC BANK SECTION (saved NPCs)
+   ============================================================================ */
+
+.npc-bank-book-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #a855f7, #9333ea);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s;
+}
+
+.npc-bank-book-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.npc-bank-book-count {
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.npc-bank-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+}
+
+.npc-bank-mini {
+    border: 1px solid var(--border-color, #333);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.npc-bank-mini:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.npc-bank-pfp {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-color, #333);
+}
+
+.npc-bank-pfp-empty {
+    width: 100%;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border-color, #333);
+    color: var(--text-dim, #666);
+    font-size: 2rem;
+}
+
+.npc-bank-mini-info {
+    padding: 10px;
+}
+
+.npc-bank-mini-name {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.npc-bank-mini-meta {
+    font-size: 0.7rem;
+    color: var(--text-muted, #888);
+    margin-top: 2px;
+}
+
+.npc-bank-mini-occ {
+    font-size: 0.65rem;
+    color: var(--text-dim, #666);
+    margin-top: 2px;
+}
+
+/* ============================================================================
+   PRESENT BAR
+   ============================================================================ */
+
+.npc-bank-present-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    background: linear-gradient(180deg, transparent, var(--bg-primary, #1a1a1a) 30%);
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 16px 16px;
+    z-index: 9998;
+    pointer-events: none;
+}
+
+.npc-bank-present-track {
+    display: flex;
+    gap: 12px;
+    padding: 0 8px;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
+    pointer-events: auto;
+    scrollbar-width: thin;
+}
+
+.npc-bank-present-item {
+    flex: 0 0 auto;
+    width: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+
+.npc-bank-present-item:hover {
+    transform: translateY(-4px);
+}
+
+.npc-bank-present-avatar {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 2px var(--bg-primary, #1a1a1a);
+}
+
+.npc-bank-present-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.npc-bank-present-name {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80px;
+    color: var(--text-main, #ddd);
+}
+
+/* ============================================================================
+   NPC BOOK MODAL
+   ============================================================================ */
+
+.npc-bank-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.npc-bank-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.npc-bank-avatar-img {
+    border-radius: 50%;
+}
+
+/* ============================================================================
+   SCROLLBARS
+   ============================================================================ */
+
+.npc-bank-body::-webkit-scrollbar,
+.npc-bank-present-track::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.npc-bank-body::-webkit-scrollbar-track,
+.npc-bank-present-track::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.npc-bank-body::-webkit-scrollbar-thumb,
+.npc-bank-present-track::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb, #444);
+    border-radius: 4px;
+}
+
+.npc-bank-body::-webkit-scrollbar-thumb:hover,
+.npc-bank-present-track::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover, #666);
+}
+
+/* ============================================================================
+   BODY CLASSES (when panel is open)
+   ============================================================================ */
+
+body.npc-bank-panel-open #chat {
+    margin-right: 340px;
+    transition: margin 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+body.npc-bank-panel-open.npc-bank-docked-left #chat {
+    margin-right: 0;
+    margin-left: 340px;
+}
+
+.npc-bank-hide-inline {
+    display: none !important;
+}
